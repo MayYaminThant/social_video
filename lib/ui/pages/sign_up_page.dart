@@ -1,3 +1,4 @@
+import 'package:social_video/controller/user_controller.dart';
 import 'package:social_video/ui/pages/sign_in_page.dart';
 import 'package:social_video/util/navigator_utils.dart';
 
@@ -136,6 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
               if (stateController.loginState ==
                   ApplicationLoginState.emailAddress) {
                 if (!mounted) return;
+                UserController.insertUser();
                 NavigatorUtils.pushAndRemoveUntil(context, const SignInPage());
               }
             }

@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/controller/bottom_nav_controller.dart';
 import 'package:social_video/ui/pages/profile_page.dart';
-import 'package:social_video/ui/pages/sign_in_page.dart';
-import 'package:social_video/ui/pages/upload_page.dart';
+import 'package:social_video/ui/pages/add_video_page.dart';
+import 'package:social_video/util/common_utils.dart';
+import 'package:social_video/util/navigator_utils.dart';
 
 import '../../controller/user_auth_controller.dart';
+import '../../controller/user_controller.dart';
+import '../../model/my_user.dart';
 import 'home_page.dart';
 
-const bodyTags = [HomePage(), UploadPage(), ProfilePage()];
+const bodyTags = [HomePage(), AddVideoPage(), ProfilePage()];
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -25,6 +28,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    CommonUtils.doInFuture(() {
+      context.read<UserController>().currentUser = MyUser.changeFromUser(
+          context.read<AuthStateController>().currentUser!);
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,
@@ -59,12 +66,17 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        backgroundColor: Colors.transparent,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         onTap: ((position) {
-          botController.selectedIndex = position;
+          if (position == 1) {
+            NavigatorUtils.push(context, const AddVideoPage());
+            setState(() {});
+          } else {
+            botController.selectedIndex = position;
+          }
         }),
+        backgroundColor: Colors.white,
       ),
     );
   }

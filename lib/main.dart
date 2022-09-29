@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/controller/bottom_nav_controller.dart';
 import 'package:social_video/controller/password_visibility_controller.dart';
+import 'package:social_video/controller/user_controller.dart';
+import 'package:social_video/controller/video_controller.dart';
 import 'package:social_video/ui/pages/sign_in_page.dart';
 import 'package:social_video/ui/pages/sign_up_page.dart';
 
 import 'controller/user_auth_controller.dart';
 import 'ui/pages/main_page.dart';
+// ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
@@ -25,6 +28,8 @@ class MyMultiProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PasswordVisibilityController()),
         ChangeNotifierProvider(create: (_) => AuthStateController()),
         ChangeNotifierProvider(create: (_) => BottomNavController(0)),
+        ChangeNotifierProvider(create: (_) => VideoController()),
+        ChangeNotifierProvider(create: (_) => UserController()),
       ],
       child: const MyMain(),
     );
@@ -65,7 +70,6 @@ class _MyMainState extends State<MyMain> {
 
   Future<void> init() async {
     loginState = await context.read<AuthStateController>().init();
-
     setState(() {});
   }
 }

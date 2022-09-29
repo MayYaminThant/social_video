@@ -132,7 +132,7 @@ class _SignInPageState extends State<SignInPage> {
           onTap: () {
             stateController.errorString = '';
             stateController.loginState = ApplicationLoginState.register;
-            NavigatorUtils.pushAndRemoveUntil(context, (SignUpPage()));
+            NavigatorUtils.pushAndRemoveUntil(context, (const SignUpPage()));
           },
           child: const Align(
             alignment: Alignment.bottomLeft,
