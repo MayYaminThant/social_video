@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 class MyUser {
   String customerId;
   String? customerName;
@@ -16,12 +14,6 @@ class MyUser {
     this.createdDate,
     this.modifiedDate,
   });
-
-  MyUser.changeFromUser(User user)
-      : customerId = user.uid,
-        customerName = user.displayName,
-        emailAddress = user.email,
-        profileUrl = user.photoURL;
 
   MyUser.fromJson(Map<dynamic, dynamic> json)
       : customerId = json['customerId'].toString(),

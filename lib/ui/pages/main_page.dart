@@ -8,7 +8,6 @@ import 'package:social_video/util/navigator_utils.dart';
 
 import '../../controller/user_auth_controller.dart';
 import '../../controller/user_controller.dart';
-import '../../model/my_user.dart';
 import 'home_page.dart';
 
 const bodyTags = [HomePage(), AddVideoPage(), ProfilePage()];
@@ -28,9 +27,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    CommonUtils.doInFuture(() {
-      context.read<UserController>().currentUser = MyUser.changeFromUser(
-          context.read<AuthStateController>().currentUser!);
+    CommonUtils.doInFuture(() async {
+      context.read<UserController>().currentUser =
+          await UserController.getAUser(
+              context.read<AuthStateController>().currentUser!.uid);
     });
     return SafeArea(
       child: Scaffold(

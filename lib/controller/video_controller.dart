@@ -31,17 +31,21 @@ class VideoController extends ChangeNotifier {
 
   Future<void> getAllVideoList() async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("videos");
-    ref.onValue.listen((DatabaseEvent event) {
+    ref.onValue.listen((DatabaseEvent event) async {
       if (event.snapshot.value is Map<dynamic, dynamic>) {
         Map<dynamic, dynamic> data = event.snapshot.value as Map;
 
         allVideoList = [];
-        data.forEach((key, value) async {
-          Video video = Video.fromJson(value);
+
+        for (final d in data.values) {
+          Video video = Video.fromJson(d);
           MyUser? user = await UserController.getAUser(video.userId);
-          if (user != null) video.user = user;
+          if (user != null) {
+            video.user = user;
+          }
           allVideoList.add(video);
-        });
+        }
+
         notifyListeners();
       }
     });
@@ -94,5 +98,15 @@ class VideoController extends ChangeNotifier {
         failureCallback();
       }
     }
+  }
+
+  static Future<void> updateVideoLikes(Video video) async {
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref("videos/${video.vid}");
+
+    await ref.update({
+      "likes": video.likes,
+      "modifiedDate": DateTime.now().toString(),
+    });
   }
 }

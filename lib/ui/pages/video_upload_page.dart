@@ -36,7 +36,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
     return Expanded(
         child: VideoPlayerItem(
       key: Key(DateTime.now().toString()),
-      videoUrl: null,
+      video: null,
       videoFile: widget.videoFile,
       height: ScreenSizeUtil.screenHeight(context) - 150,
     ));

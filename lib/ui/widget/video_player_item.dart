@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:social_video/model/video.dart';
+import 'package:social_video/ui/widget/video_user_overlay.dart';
 import 'package:social_video/util/screen_size_utils.dart';
 import 'package:video_player/video_player.dart';
 
@@ -8,16 +10,14 @@ import 'video_control_overlay.dart';
 
 class VideoPlayerItem extends StatefulWidget {
   const VideoPlayerItem(
-      {super.key, required this.videoUrl, required this.videoFile, this.height})
-      : assert(videoUrl != null || videoFile != null);
-  final String? videoUrl;
+      {super.key, required this.video, required this.videoFile, this.height})
+      : assert(video != null || videoFile != null);
+  final Video? video;
   final File? videoFile;
   final double? height;
 
   @override
   State<VideoPlayerItem> createState() => _VideoPlayerItemState();
-
-  // static void destroyVideoController() {videoCon}
 }
 
 class _VideoPlayerItemState extends State<VideoPlayerItem> {
@@ -27,8 +27,8 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   void initState() {
     super.initState();
 
-    videoController = widget.videoUrl != null
-        ? VideoPlayerController.network(widget.videoUrl!)
+    videoController = widget.video != null
+        ? VideoPlayerController.network(widget.video!.videoUrl)
         : VideoPlayerController.file(widget.videoFile!);
 
     videoController.addListener(() {
@@ -57,6 +57,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
           children: <Widget>[
             VideoPlayer(videoController),
             ControlsOverlay(controller: videoController),
+            if (widget.video != null) VideoUserOverlay(video: widget.video!),
             VideoProgressIndicator(
               videoController,
               allowScrubbing: true,

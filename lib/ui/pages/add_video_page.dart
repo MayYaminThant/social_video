@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:social_video/ui/pages/video_upload_page.dart';
+import 'package:social_video/util/file_picker_utils.dart';
 import 'package:social_video/util/navigator_utils.dart';
 
 class AddVideoPage extends StatefulWidget {
@@ -24,14 +24,10 @@ class _AddVideoPageState extends State<AddVideoPage> {
     return Center(
       child: ElevatedButton(
         onPressed: () async {
-          FilePickerResult? result = await FilePicker.platform.pickFiles(
-            type: FileType.custom,
-            allowedExtensions: ['mp4'],
-          );
-          if (result == null) return;
-
-          PlatformFile platformFile = result.files.first;
-          final File file = File(platformFile.path!);
+          final File? file = await FilePickerUtils.pickFile(['mp4']);
+          if (file == null) {
+            return;
+          }
           if (!mounted) return;
           NavigatorUtils.push(context, UploadVideoPage(videoFile: file));
         },

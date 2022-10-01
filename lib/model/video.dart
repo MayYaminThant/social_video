@@ -5,7 +5,7 @@ class Video {
   String userId;
   String videoUrl;
   String caption;
-  List? likes;
+  List<String>? likes;
   String? createdDate;
   MyUser? user;
 
@@ -24,7 +24,9 @@ class Video {
         userId = json['userId'],
         videoUrl = json['videoUrl'],
         caption = json['caption'],
-        likes = json['likes'],
+        likes = json['likes'] != null
+            ? List.of(json['likes'].cast<String>())
+            : null,
         createdDate = json['createdDate'],
         user = null;
 }

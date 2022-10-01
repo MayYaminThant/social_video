@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/controller/video_controller.dart';
@@ -31,8 +33,10 @@ class _HomePageState extends State<HomePage> {
         physics: const BouncingScrollPhysics(),
         itemCount: controller.allVideoList.length,
         itemBuilder: ((context, index) {
+          log("VideoUrl : ${controller.allVideoList.elementAt(index).videoUrl}");
           return VideoPlayerItem(
-            videoUrl: controller.allVideoList.elementAt(index).videoUrl,
+            key: Key(DateTime.now().toString()),
+            video: controller.allVideoList.elementAt(index),
             videoFile: null,
           );
         }),
