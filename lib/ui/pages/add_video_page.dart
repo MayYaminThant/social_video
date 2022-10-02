@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:social_video/ui/pages/video_upload_page.dart';
-import 'package:social_video/util/file_picker_utils.dart';
-import 'package:social_video/util/navigator_utils.dart';
+import '../../ui/pages/video_upload_page.dart';
+import '../../util/file_picker_utils.dart';
+
+import '../../util/navigator_utils.dart';
 
 class AddVideoPage extends StatefulWidget {
   const AddVideoPage({super.key});

@@ -14,8 +14,8 @@ import 'package:path/path.dart' as path;
 class VideoController extends ChangeNotifier {
   List<Video> _allVideoList = [];
   List<Video> get allVideoList => _allVideoList;
-  List<Video> _filterVideoList = [];
-  List<Video> get filterVideoList => _filterVideoList;
+  int _initialPageIndex = 0;
+  int get initialPageIndex => _initialPageIndex;
 
   set allVideoList(List<Video> allVideoListArg) {
     if (allVideoListArg == _allVideoList) return;
@@ -23,9 +23,9 @@ class VideoController extends ChangeNotifier {
     notifyListeners();
   }
 
-  set filterVideoList(List<Video> filterVideoList) {
-    if (filterVideoList == _filterVideoList) return;
-    _filterVideoList = filterVideoList;
+  set initialPageIndex(int initialPageIndex) {
+    if (initialPageIndex == _initialPageIndex) return;
+    _initialPageIndex = initialPageIndex;
     notifyListeners();
   }
 
@@ -88,7 +88,6 @@ class VideoController extends ChangeNotifier {
         'userId': user.customerId,
         'videoUrl': videoPath,
         'caption': caption,
-        'likes': [0],
         'createdDate': DateTime.now().toString(),
       });
       successCallback();

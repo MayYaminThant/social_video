@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/controller/video_controller.dart';
 import 'package:social_video/ui/widget/video_player_item.dart';
-import 'package:social_video/util/common_utils.dart';
+
+import '../../util/common_utils.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/common/common_widget.dart';
@@ -8,10 +9,13 @@ import 'package:social_video/controller/video_controller.dart';
 import 'package:social_video/model/my_user.dart';
 import 'package:social_video/ui/pages/main_page.dart';
 import 'package:social_video/util/navigator_utils.dart';
+import 'package:social_video/util/screen_size_utils.dart';
 
 class VideoUpdateDetailPage extends StatefulWidget {
-  const VideoUpdateDetailPage({super.key, required this.videoFile});
+  const VideoUpdateDetailPage(
+      {super.key, required this.videoFile, required this.videoBytes});
   final File videoFile;
+  final Uint8List? videoBytes;
 
   @override
   State<VideoUpdateDetailPage> createState() => _VideoUpdateDetailPageState();
@@ -58,13 +62,26 @@ class _VideoUpdateDetailPageState extends State<VideoUpdateDetailPage> {
         const SizedBox(
           height: 10,
         ),
-        Text(widget.videoFile.path),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            children: [
+              Expanded(child: Text(widget.videoFile.path)),
+              if (widget.videoBytes != null)
+                Image.memory(
+                  widget.videoBytes!,
+                  width: 100,
+                  height: 100,
+                ),
+            ],
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 10),
-          width: MediaQuery.of(context).size.width - 20,
+          width: ScreenSizeUtil.screenWidth(context) - 20,
           child: TextField(
             controller: _captionController,
             maxLines: 3,

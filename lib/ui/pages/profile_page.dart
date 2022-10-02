@@ -89,6 +89,13 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 90,
                           height: 90,
                           fit: BoxFit.fitWidth,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(
+                            'assets/images/no_image.jpg',
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.fitWidth,
+                          ),
                         )
                       : Image.asset(
                           'assets/images/no_image.jpg',
