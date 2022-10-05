@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/controller/bottom_nav_controller.dart';
+import 'package:social_video/controller/video_state_controller.dart';
 import 'package:social_video/ui/pages/profile_page.dart';
 import 'package:social_video/ui/pages/add_video_page.dart';
 import 'package:social_video/util/common_utils.dart';
@@ -70,6 +71,8 @@ class _MainPageState extends State<MainPage> {
         showUnselectedLabels: false,
         onTap: ((position) {
           if (position == 1) {
+            context.read<VideoStateController>().pause();
+
             NavigatorUtils.push(context, const AddVideoPage());
             setState(() {});
           } else {

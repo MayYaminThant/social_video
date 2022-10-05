@@ -47,12 +47,11 @@ class _VideoUpdateDetailPageState extends State<VideoUpdateDetailPage> {
           Navigator.pop(context);
         },
       ),
-      title: const Center(
-        child: Text(
-          'Post',
-          style: TextStyle(color: Colors.black),
-        ),
+      title: const Text(
+        'Post',
+        style: TextStyle(color: Colors.black),
       ),
+      centerTitle: true,
     );
   }
 
@@ -66,7 +65,19 @@ class _VideoUpdateDetailPageState extends State<VideoUpdateDetailPage> {
           padding: const EdgeInsets.all(10),
           child: Row(
             children: [
-              Expanded(child: Text(widget.videoFile.path)),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  width: ScreenSizeUtil.screenWidth(context) - 20,
+                  child: TextField(
+                    controller: _captionController,
+                    maxLines: 3,
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Describe your post, add hashtags.'),
+                  ),
+                ),
+              ),
               if (widget.videoBytes != null)
                 Image.memory(
                   widget.videoBytes!,
@@ -76,24 +87,8 @@ class _VideoUpdateDetailPageState extends State<VideoUpdateDetailPage> {
             ],
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          width: ScreenSizeUtil.screenWidth(context) - 20,
-          child: TextField(
-            controller: _captionController,
-            maxLines: 3,
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Describe your post, add hashtags.'),
-          ),
-        ),
         const Expanded(
-          child: SizedBox(
-            height: 10,
-          ),
+          child: SizedBox(),
         ),
         Container(
           margin: const EdgeInsets.all(10),

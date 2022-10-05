@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_video/ui/pages/video_upload_detail_page.dart';
 import 'package:social_video/util/navigator_utils.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
+import '../../controller/video_state_controller.dart';
 import '../../util/screen_size_utils.dart';
 import '../widget/video_player_item.dart';
 
@@ -56,6 +58,8 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
             quality: 25,
           );
           if (!mounted) return;
+
+          context.read<VideoStateController>().pause();
           NavigatorUtils.push(
               context,
               VideoUpdateDetailPage(

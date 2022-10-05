@@ -4,6 +4,7 @@ import 'package:social_video/controller/bottom_nav_controller.dart';
 import 'package:social_video/controller/password_visibility_controller.dart';
 import 'package:social_video/controller/user_controller.dart';
 import 'package:social_video/controller/video_controller.dart';
+import 'package:social_video/controller/video_state_controller.dart';
 import 'package:social_video/ui/pages/sign_in_page.dart';
 import 'package:social_video/ui/pages/sign_up_page.dart';
 
@@ -30,6 +31,7 @@ class MyMultiProvider extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BottomNavController(0)),
         ChangeNotifierProvider(create: (_) => VideoController()),
         ChangeNotifierProvider(create: (_) => UserController()),
+        ChangeNotifierProvider(create: (_) => VideoStateController()),
       ],
       child: const MyMain(),
     );

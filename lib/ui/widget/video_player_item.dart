@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:social_video/controller/video_state_controller.dart';
 import 'package:social_video/model/video.dart';
 import 'package:social_video/ui/widget/video_user_overlay.dart';
 import 'package:social_video/util/screen_size_utils.dart';
@@ -9,9 +11,12 @@ import 'package:video_player/video_player.dart';
 import 'video_control_overlay.dart';
 
 class VideoPlayerItem extends StatefulWidget {
-  const VideoPlayerItem(
-      {super.key, required this.video, required this.videoFile, this.height})
-      : assert(video != null || videoFile != null);
+  const VideoPlayerItem({
+    super.key,
+    required this.video,
+    required this.videoFile,
+    this.height,
+  }) : assert(video != null || videoFile != null);
   final Video? video;
   final File? videoFile;
   final double? height;
@@ -26,6 +31,8 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   @override
   void initState() {
     super.initState();
+    final VideoStateController videoStateController =
+        context.read<VideoStateController>();
 
     videoController = widget.video != null
         ? VideoPlayerController.network(widget.video!.videoUrl)
@@ -34,9 +41,14 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
     videoController.addListener(() {
       setState(() {});
     });
+
     videoController.setLooping(true);
     videoController.initialize().then((_) => setState(() {}));
     videoController.play();
+
+    videoStateController.addListener(() {
+      videoController.pause();
+    });
   }
 
   @override

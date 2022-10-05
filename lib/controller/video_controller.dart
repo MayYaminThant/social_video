@@ -35,15 +35,20 @@ class VideoController extends ChangeNotifier {
       if (event.snapshot.value is Map<dynamic, dynamic>) {
         Map<dynamic, dynamic> data = event.snapshot.value as Map;
 
-        allVideoList = [];
+        allVideoList.clear();
 
-        for (final d in data.values) {
-          Video video = Video.fromJson(d);
-          MyUser? user = await UserController.getAUser(video.userId);
-          if (user != null) {
-            video.user = user;
+        if (data.isNotEmpty) {
+          data.forEach((key, value) {
+            Video video = Video.fromJson(value);
+            allVideoList.add(video);
+          });
+
+          for (final v in allVideoList) {
+            MyUser? user = await UserController.getAUser(v.userId);
+            if (user != null) {
+              v.user = user;
+            }
           }
-          allVideoList.add(video);
         }
 
         notifyListeners();

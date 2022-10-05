@@ -121,12 +121,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       String? result =
                           await userController.uploadPicture(context);
                       if (result != null && result.isNotEmpty) {
-                        UserController.updateUserByProfileUrl(result);
+                        await UserController.updateUserByProfileUrl(result);
                         userController.pickedImageFile = null;
-                        // if (userController.currentUser != null &&
-                        //     userController.currentUser!.profileUrl != null) {
-                        //   userController.currentUser!.profileUrl = result;
-                        // }
+                        if (userController.currentUser != null) {
+                          userController.currentUser!.profileUrl = result;
+                        }
                       }
                     } else {
                       final File? file = await FilePickerUtils.pickFile(
