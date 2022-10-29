@@ -1,5 +1,6 @@
 import 'dart:io';
 
+// import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/controller/user_controller.dart';
@@ -8,6 +9,8 @@ import 'package:social_video/util/file_picker_utils.dart';
 import 'package:social_video/util/screen_size_utils.dart';
 
 import '../../controller/user_auth_controller.dart';
+import '../../util/navigator_utils.dart';
+// import 'camera_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -128,12 +131,61 @@ class _ProfilePageState extends State<ProfilePage> {
                         }
                       }
                     } else {
-                      final File? file = await FilePickerUtils.pickFile(
-                          ['jpg', 'png', 'jpeg']);
-                      if (file == null) {
-                        return;
-                      }
-                      userController.pickedImageFile = file;
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Choose Option'),
+                              actions: [
+                                InkWell(
+                                  onTap: () async {
+                                    NavigatorUtils.pop(context);
+                                    // await availableCameras().then((value) =>
+                                    //     Navigator.push(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //             builder: (_) =>
+                                    //                 CameraPage(cameras: value))));
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Row(
+                                      children: const [
+                                        SizedBox(width: 20),
+                                        Icon(Icons.camera),
+                                        SizedBox(width: 20),
+                                        Text("Camera")
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    _videoPicker(userController);
+                                    NavigatorUtils.pop(context);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration:
+                                        BoxDecoration(border: Border.all()),
+                                    child: Row(
+                                      children: const [
+                                        SizedBox(width: 20),
+                                        Icon(Icons.filter),
+                                        SizedBox(width: 20),
+                                        Text("From Gallery")
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              actionsOverflowButtonSpacing: 10,
+                              actionsAlignment: MainAxisAlignment.center,
+                              actionsOverflowDirection: VerticalDirection.down,
+                            );
+                          });
                     }
                   },
                   icon: Icon(userController.pickedImageFile != null
@@ -147,5 +199,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  _videoPicker(UserController userController) async {
+    final File? file = await FilePickerUtils.pickFile(['jpg', 'png', 'jpeg']);
+    if (file == null) {
+      return;
+    }
+    userController.pickedImageFile = file;
   }
 }

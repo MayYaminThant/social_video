@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "738361395989",
-    "project_id": "social-video-2",
-    "storage_bucket": "social-video-2.appspot.com"
+    "project_number": "745490198344",
+    "firebase_url": "https://social-video-project-two-default-rtdb.firebaseio.com",
+    "project_id": "social-video-project-two",
+    "storage_bucket": "social-video-project-two.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:738361395989:android:b76deb0b33e9f8beeb771c",
+        "mobilesdk_app_id": "1:745490198344:android:a5e232bcdb7321ddaccd7d",
         "android_client_info": {
           "package_name": "com.example.social_video"
         }
       },
       "oauth_client": [
         {
-          "client_id": "738361395989-6e7n1lbi6dcifkuni2dqfn8kkhabs9rd.apps.googleusercontent.com",
+          "client_id": "745490198344-v48dmhiqhl693l71ue4i4lsdfvg6fluj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqibuQ4v6Q_eks8dnEO6s2tTrg0AYT5Q8"
+          "current_key": "AIzaSyDraliIWZCgHl1F9sXja4bQitpjnWHhEWM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "738361395989-6e7n1lbi6dcifkuni2dqfn8kkhabs9rd.apps.googleusercontent.com",
+              "client_id": "745490198344-v48dmhiqhl693l71ue4i4lsdfvg6fluj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
