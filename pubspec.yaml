@@ -45,6 +45,9 @@ dependencies:
   video_player: ^2.4.7
   image_picker: ^0.8.5+3
   video_thumbnail: ^0.5.3
+  firebase_core: ^1.24.0
+  loader_overlay: ^2.1.0
+  camera: ^0.10.0+4
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/common/common_widget.dart';
 import 'package:social_video/controller/user_controller.dart';
@@ -10,6 +11,8 @@ import 'package:social_video/model/my_user.dart';
 import 'package:social_video/ui/pages/main_page.dart';
 import 'package:social_video/util/navigator_utils.dart';
 import 'package:social_video/util/screen_size_utils.dart';
+
+import '../../controller/video_state_controller.dart';
 
 class VideoUpdateDetailPage extends StatefulWidget {
   const VideoUpdateDetailPage(
@@ -26,10 +29,19 @@ class _VideoUpdateDetailPageState extends State<VideoUpdateDetailPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: _appBar,
-        body: _body,
-        backgroundColor: Colors.white,
+      child: GlobalLoaderOverlay(
+        useDefaultLoading: false,
+        overlayWidget: const Center(
+          child: CircularProgressIndicator(),
+        ),
+        overlayColor: Colors.black,
+        overlayOpacity: 0.8,
+        duration: const Duration(seconds: 2),
+        child: Scaffold(
+          appBar: _appBar,
+          body: _body,
+          backgroundColor: Colors.white,
+        ),
       ),
     );
   }
@@ -98,11 +110,14 @@ class _VideoUpdateDetailPageState extends State<VideoUpdateDetailPage> {
               if (user == null) {
                 return;
               }
+              context.loaderOverlay.show();
               VideoController.uploadPost(
                   context, widget.videoFile, _captionController.text, user,
                   successCallback: () {
+                context.loaderOverlay.hide();
                 NavigatorUtils.pushAndRemoveUntil(context, const MainPage());
               }, failureCallback: () {
+                context.loaderOverlay.hide();
                 showSimpleSnackBar(context, 'Upload post failed!', Colors.red);
               });
             },

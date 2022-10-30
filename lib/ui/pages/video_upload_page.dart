@@ -21,13 +21,15 @@ class UploadVideoPage extends StatefulWidget {
 }
 
 class _UploadVideoPageState extends State<UploadVideoPage> {
+  late final _videoPlayerItemWidget = _videoPlayerItem;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
-            _videoPlayerItem,
+            _videoPlayerItemWidget,
             const SizedBox(height: 10),
             _pickFileButton,
           ],

@@ -1,7 +1,8 @@
 import 'dart:io';
 
-// import 'package:camera/camera.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:social_video/controller/user_controller.dart';
 import 'package:social_video/ui/pages/sign_in_page.dart';
@@ -10,7 +11,7 @@ import 'package:social_video/util/screen_size_utils.dart';
 
 import '../../controller/user_auth_controller.dart';
 import '../../util/navigator_utils.dart';
-// import 'camera_page.dart';
+import 'camera_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,9 +23,18 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar,
-      body: _body,
+    return GlobalLoaderOverlay(
+      useDefaultLoading: false,
+      overlayWidget: const Center(
+        child: CircularProgressIndicator(),
+      ),
+      overlayColor: Colors.black,
+      overlayOpacity: 0.8,
+      duration: const Duration(seconds: 2),
+      child: Scaffold(
+        appBar: _appBar,
+        body: _body,
+      ),
     );
   }
 
@@ -42,6 +52,28 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
+      actions: [
+        Consumer<UserController>(
+          builder: (context, userController, _) =>
+              userController.pickedImageFile != null
+                  ? InkWell(
+                      onTap: () {
+                        userController.pickedImageFile = null;
+                        setState(() {});
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: Center(
+                          child: Text(
+                            'Reset',
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+        ),
+      ],
     );
   }
 
@@ -121,8 +153,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: IconButton(
                   onPressed: () async {
                     if (userController.pickedImageFile != null) {
+                      context.loaderOverlay.show();
                       String? result =
                           await userController.uploadPicture(context);
+                      context.loaderOverlay.hide();
                       if (result != null && result.isNotEmpty) {
                         await UserController.updateUserByProfileUrl(result);
                         userController.pickedImageFile = null;
@@ -140,12 +174,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 InkWell(
                                   onTap: () async {
                                     NavigatorUtils.pop(context);
-                                    // await availableCameras().then((value) =>
-                                    //     Navigator.push(
-                                    //         context,
-                                    //         MaterialPageRoute(
-                                    //             builder: (_) =>
-                                    //                 CameraPage(cameras: value))));
+                                    await availableCameras().then((value) =>
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => CameraPage(
+                                                    cameras: value))));
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(10),

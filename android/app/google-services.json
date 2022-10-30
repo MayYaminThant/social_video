@@ -30,6 +30,13 @@
             {
               "client_id": "745490198344-v48dmhiqhl693l71ue4i4lsdfvg6fluj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "745490198344-3bfqhmimagm7kt5s96ra631l6klv3a6i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.socialVideo"
+              }
             }
           ]
         }
